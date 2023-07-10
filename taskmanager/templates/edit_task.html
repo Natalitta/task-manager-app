@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h3 class="center-align #00e5ff cyan accent-3">Add Task</h3>
+
+    <div class="row card-panel grey lighten-5">
+        <form class="col s12" method="POST" action="{{ url_for('edit_task', task_id=task.id) }}">
+            <!--Task name-->
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="task_name" name="task_name" value="{{ task.task_name }}" 
+                        type="text" minlength="5" maxlength="50" class="validate" required>
+                    <label for="task_name">Edit Task Name</label>
+                </div>
+            </div>
+            <!--Task description-->
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea id="task_description" name="task_description" 
+                        type="text" minlength="5" 
+                        maxlength="200" class="materialize-textarea validate"
+                        required> {{- task.task_description -}}
+                    </textarea>
+                    <label for="task_description">Edit Task Description</label>
+                </div>
+            </div>
+            <!--Due date-->
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="due_date" name="due_date" type="text" 
+                    value="{{ task.due_date.strftime('%d %B, %Y') }}" class="datepicker validate" required>
+                    <label for="due_date">Edit Due Date</label>
+                </div>
+            </div>
+            <!--is_urgent-->
+            <div class="row">
+                <div class="input-field col s12"></div>
+                    <div class="switch">
+                        <label for="is_urgent">
+                            {% if task.is_urgent == True %}
+                                <input id="is_urgent" name="is_urgent" type="checkbox" checked>
+                            {% else %}
+                                <input id="is_urgent" name="is_urgent" type="checkbox">
+                            {% endif %}
+                            <span class="lever"></span>
+                            Edit Is Urgent
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <!--Category id-->
+            <div class="row">
+                <div class="input-field col s12">
+                    <select name="category_id" id="category_id" class="validate" required>
+                        <option value="" disabled selected>Edit Category</option>
+                        {% for category in categories %}
+                            {% if category == task.category %}
+                                <option value="{{ category_id}}" selected>{{ category.category_name }}</option>
+                            {% else %}
+                                <option value="{{ category_id}}">{{ category.category_name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <label for="category_id">Edit Category</label>
+                </div>
+            </div>
+            <!--Submit button-->
+            <div class="row">
+                <div class="col s12 center-align>
+                    <button type="submit" class="btn-large">
+                        Edit Task
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
