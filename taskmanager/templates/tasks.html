@@ -10,4 +10,22 @@
         </div>
     </div>
 
+    <ul class="collapsible">
+        {% for task in tasks|sort(attribute="due_date") %}
+        <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>
+                <strong>{{task.task_name}} : {{ task.due_date.strftime("%d %B, %Y") }}</strong>
+                {% if task.is_urgent == True %}
+
+                {% endif %}
+            </div>
+            <div class="collapsible-body">
+                <strong>{{ task.category }}</strong>
+                <p>{{ task.task_description }}</p>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+
+    
 {% endblock %}
